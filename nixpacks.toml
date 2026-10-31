@@ -1,0 +1,14 @@
+# Coolify -> Build Pack: Nixpacks. No npm dependencies; SQLite is built into Node.
+providers = ["node"]
+
+[phases.setup]
+nixPkgs = ["nodejs_22"]
+
+[phases.install]
+cmds = []
+
+[phases.build]
+cmds = []
+
+[start]
+cmd = "node --experimental-sqlite server.js"

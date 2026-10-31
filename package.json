@@ -1,0 +1,12 @@
+{
+  "name": "pruimenlikeur",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tasting feedback app for homemade plum liqueurs",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --experimental-sqlite server.js"
+  },
+  "engines": { "node": ">=22.5" }
+}
