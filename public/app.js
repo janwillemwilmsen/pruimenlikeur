@@ -5,7 +5,7 @@ const T = {
   nl: {
     brand: 'Pruimenlikeur Proeverij',
     eyebrow: 'Huisgemaakt · Lang in het donker gerijpt',
-    title: 'Welke <em>pruim</em> wint jouw hart?',
+    title: 'Welke <em>likeur</em> wint jouw hart?',
     lead: 'Een klein tiental zelfgemaakte pruimenlikeuren, elk met een eigen karakter. Proef, geef een cijfer en help ons de allerbeste te vinden.',
     howMany: 'Hoeveel likeurtjes heb je geproefd?',
     howManyHint: 'Kies een aantal, daarna wijs je ze aan.',
