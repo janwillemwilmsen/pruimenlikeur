@@ -1,4 +1,4 @@
-import { esc, plumSvg, bottleSvg, api } from './common.js';
+import { esc, tabSvg, badgeSvg, heartSvg, bottleSvg, api } from './common.js';
 
 // ---------- i18n ----------
 const T = {
@@ -31,7 +31,7 @@ const T = {
     thanks: 'Hartelijk bedankt!',
     again: 'Nog een rondje proeven',
     anotherJoke: 'Nog een grap',
-    footer: 'Gemaakt met liefde, pruimen en geduld.',
+    footer: 'Met pruimen en geduld.',
     scores: ['', 'Bah!', 'Hmm, nee', 'Matig', 'Kan beter', 'Prima', 'Lekker', 'Heel lekker', 'Top!', 'Geweldig!', 'Hemels 😍'],
     jokes: [
       'Je oordeel is zojuist in pruimenlikeur gemarineerd. Het wordt alleen maar beter met de tijd.',
@@ -74,7 +74,7 @@ const T = {
     thanks: 'Thank you so much!',
     again: 'Taste another round',
     anotherJoke: 'Another joke',
-    footer: 'Made with love, plums and patience.',
+    footer: 'With plums and patience.',
     scores: ['', 'Yuck!', 'Hmm, no', 'Meh', 'Could be better', 'Decent', 'Tasty', 'Very tasty', 'Great!', 'Fantastic!', 'Heavenly 😍'],
     jokes: [
       'Your verdict has just been marinated in plum liqueur. It only gets better with time.',
@@ -89,7 +89,7 @@ const T = {
     ],
   },
 };
-let lang = localStorage.getItem('lang') === 'en' ? 'en' : 'nl';
+const lang = 'nl';
 const t = (k, v = {}) => String(T[lang][k]).replace(/\{(\w+)\}/g, (_, n) => v[n]);
 
 // ---------- state ----------
@@ -110,13 +110,13 @@ function nav(to, replace) { history[replace ? 'replaceState' : 'pushState']({}, 
 function viewHome() {
   const total = flavours.length;
   if (!total) {
-    return `<section class="hero view"><div class="logo">${plumSvg('hero')}</div><h1>${t('title')}</h1><p class="lead">${t('noFlavours')}</p></section>`;
+    return `<section class="hero view"><h1>${t('title')}</h1><p class="lead">${t('noFlavours')}</p></section>`;
   }
   const sel = store.get().count || 0;
   const nums = Array.from({ length: total }, (_, i) => i + 1);
   return `
   <section class="hero view">
-    <div class="logo">${plumSvg('hero')}</div>
+    
     <div class="eyebrow">${t('eyebrow')}</div>
     <h1>${t('title')}</h1>
     <p class="lead">${t('lead')}</p>
@@ -212,7 +212,7 @@ function pickJoke() {
 function viewThanks() {
   return `
   <section class="thanks view">
-    <div class="big">🍇</div>
+    <div class="big">${heartSvg()}</div>
     <h1>${t('thanks')}</h1>
     <p class="joke" id="joke">${esc(pickJoke())}</p>
     <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
@@ -225,7 +225,7 @@ function viewThanks() {
 // ---------- animations ----------
 const rainEl = document.getElementById('rain');
 function startRain() {
-  const items = ['🍇', '🟣', '🍷', '🫐', '🥃', '✨'];
+  const items = ['♡', '♡', '♡', '🍷', '🥃'];
   rainEl.innerHTML = Array.from({ length: 22 }, () => {
     const s = 18 + Math.random() * 28;
     return `<span style="left:${Math.random() * 100}%;font-size:${s}px;animation-duration:${6 + Math.random() * 7}s;animation-delay:${-Math.random() * 10}s">${items[Math.floor(Math.random() * items.length)]}</span>`;
@@ -240,7 +240,7 @@ function confetti(durationMs = 4500) {
   const ctx = cv.getContext('2d');
   const fit = () => { cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio; };
   fit();
-  const colors = ['#f0c06a', '#b4529a', '#8e3a74', '#fbefe1', '#c98f2a', '#d27ab8'];
+  const colors = ['#5b1f3a', '#c4828a', '#d98e72', '#e8b4ad', '#8a3a5c', '#f3d3cf'];
   const parts = Array.from({ length: 160 }, () => ({
     x: innerWidth / 2 + (Math.random() - .5) * 120, y: innerHeight * .35,
     vx: (Math.random() - .5) * 16, vy: -Math.random() * 16 - 4, g: .32 + Math.random() * .15,
@@ -268,10 +268,10 @@ function confetti(durationMs = 4500) {
 // ---------- render + events ----------
 function render() {
   const p = location.pathname.replace(/\/+$/, '') || '/';
-  document.getElementById('brand').innerHTML = `${plumSvg('brand')}<span>${t('brand')}</span>`;
-  document.getElementById('footer').textContent = t('footer');
+  document.getElementById('brand').innerHTML = `${tabSvg('brand')}<span>${t('brand')}</span>`;
+  document.getElementById('footer').innerHTML = `<b>${heartSvg()}Gemaakt met liefde</b>${esc(t('footer'))}`;
   document.documentElement.lang = lang;
-  document.querySelectorAll('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  document.getElementById('crest').innerHTML = badgeSvg('crest-svg');
   stopRain();
   let html = null;
   if (p === '/') html = viewHome();
@@ -364,9 +364,6 @@ async function submit() {
   }
 }
 
-document.querySelectorAll('[data-lang]').forEach((b) => b.addEventListener('click', () => {
-  lang = b.dataset.lang; localStorage.setItem('lang', lang); render();
-}));
 document.addEventListener('click', (e) => {
   const a = e.target.closest('a[data-link]');
   if (a) { e.preventDefault(); nav(a.getAttribute('href')); }

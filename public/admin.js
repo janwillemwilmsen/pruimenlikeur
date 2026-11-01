@@ -1,8 +1,8 @@
-import { esc, plumSvg, bottleSvg, api, resizeImage } from './common.js';
+import { esc, tabSvg, bottleSvg, api, resizeImage } from './common.js';
 
 const $app = document.getElementById('app');
 const $top = document.getElementById('topright');
-document.getElementById('brand').innerHTML = `${plumSvg('adm')}<span>Admin</span>`;
+document.getElementById('brand').innerHTML = `${tabSvg('adm')}<span>Admin</span>`;
 let tab = sessionStorage.getItem('tab') || 'flavours';
 
 const fmt = (n, d = 1) => (n == null ? '–' : Number(n).toFixed(d).replace('.', ','));
@@ -94,7 +94,7 @@ function editor(f) {
         <input type="file" id="file" accept="image/*" hidden>
         <button type="button" class="btn ghost sm" id="pick">Choose photo</button>
         <button type="button" class="btn ghost sm" id="rm" ${f.photo ? '' : 'hidden'}>Remove</button>
-        <div class="hint" style="font-size:.85rem;margin-top:6px">Resized automatically.</div>
+        <div class="hint" style="font-size:.85rem;margin-top:6px"><b>Best: landscape 4:3</b> (e.g. 1200 × 900 px). Shown as 4:3 everywhere, on desktop and mobile; anything else is cropped from the centre, so keep the bottle in the middle with some space around it. Resized automatically.</div>
       </div>
     </div>
     <div class="two">

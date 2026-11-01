@@ -7,6 +7,7 @@ ingredients), shows results and exports CSV. Zero npm dependencies: Node's built
 ## Run locally
 
     ADMIN_PASSWORD=secret node --experimental-sqlite server.js
+	$env:ADMIN_PASSWORD = "secret"; node --experimental-sqlite server.js
 
 (Node >= 22.5; the flag is a harmless no-op on newer versions.) Open http://localhost:3000 and http://localhost:3000/admin.
 
